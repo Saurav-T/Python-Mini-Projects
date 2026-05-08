@@ -25,21 +25,19 @@ A command-line To-Do List application built using Python that allows users to ma
 
 ## Project Structure
 
+```bash
 todo-list/
-│
-├── data/
-│ └── tasks.json
-│
-├── src/
-│ └── main.py
-│
-├── assets/
-│ └── screenshots/
-│
+├── data
+│   └── tasks.json
+├── src
+│   └── main.py
+├── assets
+│   └── screenshots
 ├── README.md
 └── requirements.txt
+```
 
-## ⚙️ How It Works
+## How It Works
 
 - User interacts through a command line menu
 - Tasks are stored in a JSON file (`data/tasks.json`)
