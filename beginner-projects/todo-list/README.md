@@ -55,7 +55,7 @@ git clone https://github.com/Saurav-T/Python-Mini-Projects
 
 2. Navigate to Project Folder:
 ```bash
-cd todo-list
+cd Python-Mini-Projects/beginner-projects/todo-list
 ```
 
 3. Run the Program:
