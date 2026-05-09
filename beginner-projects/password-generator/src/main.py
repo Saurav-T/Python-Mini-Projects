@@ -1,8 +1,22 @@
 import random
 import string
 import json
+from cryptography.fernet import Fernet
 
 FILE = "data/passwords.json"
+KEY_FILE = "key.key"
+
+
+def load_key():
+    try:
+        return open(KEY_FILE, "rb").read()
+    except FileNotFoundError:
+        print("Key File Missing. Run keygen.py file to generate a .key file.")
+        exit()
+
+
+key = load_key()
+fernet = Fernet(key)
 
 
 def load_passwords():
@@ -21,10 +35,12 @@ def view_passwords(passwords):
         return
     else:
         for i, info in enumerate(passwords, start=1):
+            decrypted_password = fernet.decrypt(
+                info["password"].encode()).decode()
             print(f"""{i}.
     Website: {info['website']}
     Username: {info['username']}
-    Password: {info['password']}""")
+    Password: {decrypted_password}""")
 
 
 def save_passwords(passwords):
@@ -38,10 +54,12 @@ def save_password(passwords, password=None):
     if password == None:
         password = input("Password: ")
 
+    encrypted_password = fernet.encrypt(password.encode()).decode()
+
     passwords.append({
         "website": website,
         "username": username,
-        "password": password
+        "password": encrypted_password
     })
 
     save_passwords(passwords)
