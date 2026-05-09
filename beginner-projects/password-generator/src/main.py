@@ -32,9 +32,11 @@ def save_passwords(passwords):
         json.dump(passwords, f, indent=4)
 
 
-def add_password(passwords, password):
+def save_password(passwords, password=None):
     website = input("Website: ")
     username = input("Username: ")
+    if password == None:
+        password = input("Password: ")
 
     passwords.append({
         "website": website,
@@ -45,29 +47,15 @@ def add_password(passwords, password):
     save_passwords(passwords)
 
 
-def delete_password(passwords):
-    view_passwords(passwords)
-    try:
-        index = int(input("Enter the position of the password to be deleted: "))
-        if 1 <= index <= len(passwords):
-            removed = passwords.pop(index-1)
-            save_passwords(passwords)
-            print(
-                f"Removed password at index {index} for website: {removed['website']}.")
-        else:
-            print("Invalid Index.")
-    except ValueError:
-        print("Enter a valid number.")
-
-
 def menu():
     print("\n===== Password Generator and Manager =====")
     print("1. Generate Password")
-    print("2. Save Password")
-    print("3. View Passwords")
-    print("4. Check Password Strength")
-    print("5. Delete Password")
-    print("6. Exit")
+    print("2. Save Generated Password")
+    print("3. Save Manual Credentials")
+    print("4. View Passwords")
+    print("5. Check Password Strength")
+    print("6. Delete Password")
+    print("7. Exit")
 
 
 def generate_password(length):
@@ -172,19 +160,22 @@ def main():
                 print("Enter a valid number.")
         elif choice == "2":
             if current_password:
-                add_password(passwords, current_password)
+                save_password(passwords, current_password)
                 print("Password Saved Successfully.")
                 current_password = None
             else:
                 print("No generated password found. Generate one first.")
         elif choice == "3":
-            view_passwords(passwords)
+            save_password(passwords)
+            print("Credentials saved successfully.")
         elif choice == "4":
-            checkpassword = input("Enter a password to check it's strength: ")
-            check_strength(checkpassword)
+            view_passwords(passwords)
         elif choice == "5":
-            delete_password(passwords)
+            check_password = input("Enter a password to check it's strength: ")
+            check_strength(check_password)
         elif choice == "6":
+            delete_password(passwords)
+        elif choice == "7":
             break
         else:
             print("Enter a valid choice.")
