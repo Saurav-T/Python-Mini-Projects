@@ -22,9 +22,9 @@ def view_passwords(passwords):
     else:
         for i, info in enumerate(passwords, start=1):
             print(f"""{i}.
-                \tWebsite: {info['website']}
-                \tUsername: {info['username']}
-                \tPassword: {info['password']}""")
+    Website: {info['website']}
+    Username: {info['username']}
+    Password: {info['password']}""")
 
 
 def save_passwords(passwords):
@@ -45,13 +45,29 @@ def add_password(passwords, password):
     save_passwords(passwords)
 
 
+def delete_password(passwords):
+    view_passwords(passwords)
+    try:
+        index = int(input("Enter the position of the password to be deleted: "))
+        if 1 <= index <= len(passwords):
+            removed = passwords.pop(index-1)
+            save_passwords(passwords)
+            print(
+                f"Removed password at index {index} for website: {removed['website']}.")
+        else:
+            print("Invalid Index.")
+    except ValueError:
+        print("Enter a valid number.")
+
+
 def menu():
     print("\n===== Password Generator and Manager =====")
     print("1. Generate Password")
     print("2. Save Password")
     print("3. View Passwords")
     print("4. Check Password Strength")
-    print("5. Exit")
+    print("5. Delete Password")
+    print("6. Exit")
 
 
 def generate_password(length):
@@ -62,6 +78,21 @@ def generate_password(length):
         password += random.choice(characters)
 
     return password
+
+
+def delete_password(passwords):
+    view_passwords(passwords)
+    try:
+        index = int(input("Enter position to delete: "))
+        if 1 <= index <= len(passwords):
+            removed = passwords.pop(index - 1)
+            save_passwords(passwords)
+            print(
+                f"Removed password as position {index} for {removed['website']}.")
+        else:
+            print("Invalid index")
+    except ValueError:
+        print("Enter a valid number")
 
 
 def check_strength(password):
@@ -133,16 +164,17 @@ def main():
             try:
                 length = int(input("Enter the required password length: "))
                 if length <= 0:
-                    print("Password length must be greater than 0")
+                    print("Password length must be greater than 0.")
                 else:
                     current_password = generate_password(length)
                     print(f"Generated Password: {current_password}")
             except ValueError:
-                print("Enter a valid number")
+                print("Enter a valid number.")
         elif choice == "2":
             if current_password:
                 add_password(passwords, current_password)
-                print("Password Saved Successfully")
+                print("Password Saved Successfully.")
+                current_password = None
             else:
                 print("No generated password found. Generate one first.")
         elif choice == "3":
@@ -151,7 +183,8 @@ def main():
             checkpassword = input("Enter a password to check it's strength: ")
             check_strength(checkpassword)
         elif choice == "5":
-            print("Closing...")
+            delete_password(passwords)
+        elif choice == "6":
             break
         else:
             print("Enter a valid choice.")
