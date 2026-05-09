@@ -13,5 +13,8 @@ class Expense:
             "date": self.date
         }
     
+    def to_tuple(self):
+        return (self.amount, self.category, self.description, self.date)
+    
     def __str__(self):
         return f"{self.date} | {self.category} | Rs. {self.amount} | {self.description}"
