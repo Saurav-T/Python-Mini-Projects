@@ -50,7 +50,8 @@ def menu():
     print("1. Generate Password")
     print("2. Save Password")
     print("3. View Passwords")
-    print("4. Exit")
+    print("4. Check Password Strength")
+    print("5. Exit")
 
 
 def generate_password(length):
@@ -61,6 +62,65 @@ def generate_password(length):
         password += random.choice(characters)
 
     return password
+
+
+def check_strength(password):
+    has_upper = False
+    has_lower = False
+    has_digits = False
+    has_special = False
+
+    special_characters = string.punctuation
+
+    for ch in password:
+        if ch.isupper():
+            has_upper = True
+        elif ch.islower():
+            has_lower = True
+        elif ch.isdigit():
+            has_digits = True
+        elif ch in special_characters:
+            has_special = True
+
+    score = 0
+    missing = []
+
+    if len(password) >= 8:
+        score += 1
+    else:
+        missing.append("Minimum 8 characters")
+
+    if has_upper:
+        score += 1
+    else:
+        missing.append("Uppercase Letters")
+
+    if has_lower:
+        score += 1
+    else:
+        missing.append("Lowercase Letters")
+
+    if has_digits:
+        score += 1
+    else:
+        missing.append("Digits")
+
+    if has_special:
+        score += 1
+    else:
+        missing.append("Special Characters")
+
+    print(f"Strength: {score}/5")
+
+    if score <= 2:
+        print("Weak Password.")
+    elif score <= 4:
+        print("Medium Password.")
+    else:
+        print("Strong Password")
+
+    if missing:
+        print(f"Missing: {', '.join(missing)}")
 
 
 def main():
@@ -88,7 +148,10 @@ def main():
         elif choice == "3":
             view_passwords(passwords)
         elif choice == "4":
-            print("Closing..")
+            checkpassword = input("Enter a password to check it's strength: ")
+            check_strength(checkpassword)
+        elif choice == "5":
+            print("Closing...")
             break
         else:
             print("Enter a valid choice.")
