@@ -1,0 +1,52 @@
+[
+  {
+    "question": "What is the capital of Nepal?",
+    "options": {
+      "a": "Pokhara",
+      "b": "Kathmandu",
+      "c": "Lalitpur",
+      "d": "Bhaktapur"
+    },
+    "answer": "b"
+  },
+  {
+    "question": "Which language is primarily used for Python development?",
+    "options": {
+      "a": "Java",
+      "b": "C++",
+      "c": "Python",
+      "d": "HTML"
+    },
+    "answer": "c"
+  },
+  {
+    "question": "What does CPU stand for?",
+    "options": {
+      "a": "Central Process Unit",
+      "b": "Central Processing Unit",
+      "c": "Computer Personal Unit",
+      "d": "Control Processing Unit"
+    },
+    "answer": "b"
+  },
+  {
+    "question": "Which data type is used to store True or False values in Python?",
+    "options": {
+      "a": "String",
+      "b": "Integer",
+      "c": "Boolean",
+      "d": "Float"
+    },
+    "answer": "c"
+  },
+  {
+    "question": "Which keyword is used to define a function in Python?",
+    "options": {
+      "a": "func",
+      "b": "define",
+      "c": "def",
+      "d": "function"
+    },
+    "answer": "c"
+  }
+]
