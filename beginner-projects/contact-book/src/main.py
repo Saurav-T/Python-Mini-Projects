@@ -55,6 +55,17 @@ def search_contact():
     if not found:
         print("No contact found.")
 
+def delete_contact():
+    contacts = load_contacts()
+    name = input("Enter name of contact to delete: ")
+    new_contacts = [c for c in contacts if c['name'] != name]
+
+    if len(new_contacts) == len(contacts):
+        print("Contact not found.")
+    else:
+        print("Contact deleted sucessfully.")
+        save_contacts(new_contacts)
+
 
 
 def main():
@@ -68,7 +79,7 @@ def main():
         elif choice == "3":
             search_contact()
         elif choice == "4":
-            print("Feature in Development.")
+            delete_contact()
         elif choice == "5":
             print("Closing....")
             break
