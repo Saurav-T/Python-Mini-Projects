@@ -7,7 +7,8 @@ def menu():
     print("2. View Contacts")
     print("3. Search Contact")
     print("4. Delete Contact")
-    print("5. Exit")
+    print("5. Update Contact")
+    print("6. Exit")
 
 def load_contacts():
     try:
@@ -66,7 +67,28 @@ def delete_contact():
         print("Contact deleted sucessfully.")
         save_contacts(new_contacts)
 
+def update_contact():
+    contacts = load_contacts()
 
+    name = input("Enter name of contact to update: ").strip().lower()
+
+    found = False
+
+    for c in contacts:
+        if c["name"].strip().lower() == name:
+            found = True
+
+            print("Contact found!")
+
+            c["phone"] = input("Enter new phone number: ").strip()
+            c["email"] = input("Enter new email: ").strip()
+
+            save_contacts(contacts)
+            print("Contact updated successfully.")
+            return
+
+    print("No contact found.")
+    
 
 def main():
     while True:
@@ -81,6 +103,8 @@ def main():
         elif choice == "4":
             delete_contact()
         elif choice == "5":
+            update_contact()
+        elif choice == "6":
             print("Closing....")
             break
         else:
