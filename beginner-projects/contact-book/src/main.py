@@ -43,6 +43,20 @@ def view_contacts():
         for i, c in enumerate(contacts, start=1):
             print(f"{i}. {c['name']} | {c['phone']} | {c['email']}")
 
+def search_contact():
+    contacts = load_contacts()
+    query = input("Enter a name to search: ").lower()
+    found = False
+    for c in contacts:
+        if query in c['name'].lower():
+            print(f"Found: {c['name']} | {c['phone']} | {c['email']}")
+            found = True
+
+    if not found:
+        print("No contact found.")
+
+
+
 def main():
     while True:
         menu()
@@ -52,7 +66,7 @@ def main():
         elif choice == "2":
             view_contacts()
         elif choice == "3":
-            print("Feature in Development.")
+            search_contact()
         elif choice == "4":
             print("Feature in Development.")
         elif choice == "5":
