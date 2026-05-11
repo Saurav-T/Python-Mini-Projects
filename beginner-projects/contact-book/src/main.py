@@ -26,6 +26,16 @@ def add_contact():
     name = input("Enter Contact Name: ")
     phone = input("Enter Phone Number: ")
     email = input("Enter Email Address: ")
+
+    for c in contacts:
+        if c["phone"] == phone:
+            print("Phone number already exists!")
+            return
+
+        if c["email"].lower() == email.lower():
+            print("Email already exists!")
+            return
+    
     contacts.append({
         "name" : name,
         "phone" : phone,
