@@ -21,7 +21,7 @@ A lightweight, interactive command-line quiz application built with Python. It s
 - JSON (for data storage)
 - File Handling
 - CLI (Command Line Interface)
-- Built-in modules:
+- Built-in modules
 
 ---
 
@@ -72,17 +72,17 @@ python src/main.py
 
 ## Screenshots
 
-### Main Menu
+### Question
 
 ![Question](assets/screenshots/question.png)
 
-### Add Task
+### Leaderboard
 
 ![Leaderboard](assets/screenshots/leaderboard.png)
 
-### View Tasks
+### Quiz App Flow
 
-![View Tasks](assets/gifs/input.gif)
+![Quiz App Flow](assets/gifs/input.gif)
 
 ## Future Improvements
 
