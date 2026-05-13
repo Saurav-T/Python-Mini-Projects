@@ -1,4 +1,5 @@
 key.key
 data/passwords.json
+data/
 venv/
 __pycache__/
