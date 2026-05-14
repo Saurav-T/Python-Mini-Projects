@@ -8,6 +8,7 @@ from json import JSONDecodeError
 
 IGNORE_DIRS = ["venv", ".git", "__pycache__"]
 METADATA_FILE = "metadata.json"
+DRY_RUN = False
 
 log = [] 
 
@@ -20,6 +21,17 @@ def load_metadata():
             return json.load(f)
     except (JSONDecodeError, FileNotFoundError):
         return {}
+    
+def sync_deletions(source, metadata):
+    for path_key in list(metadata.keys()):
+        source_path = os.path.join(source, path_key)
+        if not os.path.exists(source_path):
+            backup_path = metadata[path_key]["backup_path"]
+            if os.path.exists(backup_path):
+                os.remove(backup_path)
+            del metadata[path_key]
+            append_log(f"{datetime.now()}::: DELETED ::: {source_path}")
+
     
 def save_metadata(data):
     with open(METADATA_FILE, 'w') as f:
@@ -34,10 +46,8 @@ def get_file_hash(file_path):
         
     return hasher.hexdigest()   
 
-def should_copy(src, dest):
-    if not os.path.exists(dest):
-        return True
-    return get_file_hash(src) != get_file_hash(dest)
+def should_copy(path_key, src_hash, metadata):
+     return metadata.get(path_key, {}).get("hash") != src_hash
 
 def copy_files(source, backup, metadata):
     for root, dirs, filenames in os.walk(source):
@@ -52,11 +62,13 @@ def copy_files(source, backup, metadata):
             dest = os.path.join(dest_folder, file)
 
             try:
-                if should_copy(src, dest):
+                path_key = os.path.relpath(src, source)
+                src_hash = get_file_hash(src)
+                if should_copy(path_key, src_hash, metadata):
                     shutil.copy2(src, dest)
                     append_log(f"{datetime.now()} ::: COPIED ::: {src}")
                     metadata[os.path.relpath(src, source)] = {
-                        "hash": get_file_hash(src),
+                        "hash": src_hash,
                         "last_modified": os.path.getmtime(src),
                         "backup_path": dest
                     }
@@ -88,11 +100,14 @@ def main():
         return
 
     copy_files(source, backup, metadata)
+    sync_deletions(source, metadata)
     save_log()
     save_metadata(metadata)
-    
+
+    log.clear()
     print("Backup completed successfully.")
     print("Log updated.")
+
 
 if __name__ == "__main__":
     main()
